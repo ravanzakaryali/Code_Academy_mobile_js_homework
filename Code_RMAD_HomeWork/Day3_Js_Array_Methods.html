@@ -1,0 +1,87 @@
+<!DOCTYPE html >
+    <html lang = "en">
+    <head>
+    <meta charset = "UTF-8">
+    <meta http - equiv = "X-UA-Compatible" content = "IE=edge" >
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0" >
+    <title> Document </title> </head>
+
+<body style="background-color: black;">
+    <script>
+    function RandomNumberGenerator(min, max) {
+        return Math.round(Math.random() * (max - min)) + min;
+    }
+let users = [{
+    id: 10,
+    name: null,
+    surname: "miriyev",
+    age: 20
+}, {
+    id: 20,
+    name: null,
+    surname: "Memmedzade",
+    age: 15
+}, {
+    id: 14,
+    name: "farid",
+    surname: "rzayev",
+    age: 15
+}];
+
+function AddUser(name, surname, age) {
+    const user = {
+        id: users[users.length - 1].id + 1,
+        name: name,
+        surname: surname,
+        age: age
+    };
+    users.push(user);
+    return `User: ${user.name} ${user.surname} ${user.age}`;
+}
+
+function FindById(id) {
+    return users.find(function(user) {
+        return user.id == id;
+    });
+}
+
+function FindNameNull() {
+    return users.filter(function(user) {
+        return user.name == null;
+    });
+}
+
+function FindChildren() {
+    return users.filter(function(user) {
+        return user.age < 18;
+    });
+}
+
+function FixedName() {
+    users.map(function(user) {
+        if(user.name != null){
+            user.name =  user.name[0].toUpperCase() + user.name.slice(1); //mirsalam = M+irsalam= Mirsalam; 
+        }
+        if(user.surname != null){
+            user.surname = user.surname[0].toUpperCase() + user.surname.slice(1);
+        }
+    });
+} 
+function SortUsers(){
+    return users.sort(function(user,sortUser){
+        return user.id - sortUser.id
+    })
+}
+function CheckAgeChildren(){
+    // return users.every(function(user){
+    //     return user.age > 18
+    // })
+    return users.some(function(user){
+        return user.age > 18
+    })
+}
+</script>
+
+</body>
+
+</html>
