@@ -252,6 +252,20 @@
                 }
             }
         ];
+         function GetAllPrice(min,max){
+            return products.filter(product => product.price > min && product.price < max);
+        }
+        function SortRating(){
+            products.sort((a,b) => b.rating.rate - a.rating.rate || b.rating.count - a.rating.count);
+        }
+        function SearchByTitle(productTitle){
+            return products.filter(product=> product.title.toLocaleLowerCase()
+                                    .includes(productTitle.toLocaleLowerCase()));
+        }
+        function SearchByCategory(productCategory){
+            return products.filter(product=> product.category.toLocaleLowerCase()
+                                    .includes(productCategory.toLocaleLowerCase()));
+        }
     </script>
 </body>
 
