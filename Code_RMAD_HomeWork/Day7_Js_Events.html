@@ -82,9 +82,7 @@
             RemovePost(postIdInput);
         }
         function RemovePost(postId){
-           posts = posts.filter(function(post){
-                return post.id != postId;
-           })
+           posts = posts.filter(post => post.id == postId);
         }
 
         //--------------------------------------
