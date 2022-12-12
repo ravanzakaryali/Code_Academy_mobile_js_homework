@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+</head>
+
+<body>
+
+    <script>
+        function getPrayerTime(country, city) {
+            let url = `https://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}`;
+            fetch(url)
+                .then(res => res.json())
+                .then(d => {
+                    let interval = setInterval(()=>{
+                        let today = moment();
+                        let todayHour = today;
+                        let timings = getDatePrayerTime(d.data, today.format('DD-MM-YYYY'));
+                        Object.values(timings).forEach(timing => {
+                            let duration = moment.duration(todayHour.diff(moment(timing,'HH:mm')));
+                            let minute = duration.asMinutes()
+                            if(minute < 0 && minute > -15){
+                                console.warn("Imana gəlin",minute);
+                                clearInterval(interval);
+                            }
+                        }); 
+                    },1000)
+
+                }).catch(error => console.log(error));
+        }
+        function getDatePrayerTime(data, day) {
+            return data.find(item => item.date.gregorian.date == day).timings;
+        }
+
+        function getPrayerTimeByDate(country,city,year,month){
+            let url = `https://api.aladhan.com/v1/calendarByCity?city=${city}&country=${country}&month=${month}&year=${year}`
+            fetch(url)
+            .then(res=>res.json())
+            .then(d=>console.log(d.data));
+        }
+        
+
+    </script>
+</body>
+
+</html>
